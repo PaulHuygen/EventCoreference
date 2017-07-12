@@ -1,0 +1,11 @@
+#!/bin/bash
+thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $thisdir
+if
+    [ -z ${naflang+x} ]
+then
+    echo "Naflang variable is not set" >&2
+    exit 1
+fi
+script="scripts/event-coreference-${naflang}.sh"
+cat | $script

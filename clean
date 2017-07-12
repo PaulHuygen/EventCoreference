@@ -1,0 +1,11 @@
+#!/bin/bash
+thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $thisdir
+
+echo "Cleaning up EventCoreference module"
+cd "$thisdir"
+rm -R target
+rm -R src
+rm EventCoreference.iml
+rm EventCoreference.iws
+rm EventCoreference.ipr
