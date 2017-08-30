@@ -1,11 +1,32 @@
 #!/bin/bash
-thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $thisdir
+modname=EventCoreference
+#
+# Find the path to this module
+#
 if
-    [ -z ${naflang+x} ]
+  [ -z ${MODROOT+x} ]
 then
-    echo "Naflang variable is not set" >&2
-    exit 1
+  # Find out path ourselves
+  thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+else
+  thisdir=$MODROOT/$modname
 fi
-script="scripts/event-coreference-${naflang}.sh"
+thisscript=${thisdir}/run
+cd $thisdir
+#
+# Find the language
+#
+if
+  [ -z "${NAFLANG+x}" ]
+then
+  naffile=`mktemp -t naf.XXXXXX`
+  cat >$naffile
+  NAFLANG=`cat $naffile | python ${thisdir}/langdetect.py` 
+  export NAFLANG
+  cat $naffile | $thisscript
+  result=$?
+  rm $naffile
+  exit $result
+fi
+script="scripts/event-coreference-${NAFLANG}.sh"
 cat | $script
