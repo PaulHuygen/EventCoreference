@@ -5,7 +5,6 @@ thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $thisdir
 socketdir="$( cd ${thisdir} && cd .. && pwd)"
 cd ${thisdir}
-set -e
 
 echo "#1. Check/install the vua-resources" >&2
 cd "$socketdir"
